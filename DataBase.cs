@@ -25,7 +25,7 @@ public class dataBase {
     [XmlElement("compoundType")] //element, ionic, molecular
     public int compundType;
 
-    [XmlElement("positionAC")]
+    [XmlElement("positionAC")] //position in activity series
     public int positionAC;
 }
 
