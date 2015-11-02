@@ -1,0 +1,30 @@
+<xml version = "1.0" encoding="UTF-8"?>
+
+  <itemCollection>
+    <items>
+      
+      <item name ="Hydrogen">
+        <charge1>1</charge1>
+        <charge2>1</charge2>
+        <chargeType>true</chargeType>
+        <atomicNo>1</atomicNo>
+        <compoundState>3</compoundState>
+        <compundType>1</compundType>
+        <positionAC>1</positionAC>
+      </item>
+
+      <item name ="Oxygen">
+        <charge1>2</charge1>
+        <charge2>2</charge2>
+        <chargeType>false</chargeType>
+        <atomicNo>8</atomicNo>
+        <compoundState>3</compoundState>
+        <compundType>1</compundType>
+        <positionAC>1</positionAC>
+      </item>
+      
+    </items>
+  </itemCollection>
+  
+  
+    
