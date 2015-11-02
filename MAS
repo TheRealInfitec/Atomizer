@@ -1,0 +1,87 @@
+using UnityEngine;
+using System.Collections;
+
+public class MAS : MonoBehaviour {
+
+// Motion Variables
+	Vector3 screenPoint;
+	Vector3 offset;	
+
+//Attach Variables
+	GameObject[] atoms;
+	GameObject[] animate;
+	public GameObject atom = null;
+	public bool Attachable = false;
+	int CollCount = 0;
+
+//Seperation Variables
+	public bool Seperable = false;
+	public GameObject aprod;
+	Vector3 newPos;
+	Vector3 finPos1;
+	Vector3 finPos2;
+
+//Atom Position Tracker
+	void Update()
+	{
+		newPos = transform.position;
+		finPos1 = newPos + new Vector3 (200f, 200f, -1);
+		finPos2 = newPos + new Vector3 (-100f, -100f, -1);
+	}
+//Atom Motion/Seperation
+	void OnMouseDown()
+	{
+		//Atom Motion
+		if (ToolSel.movement == true) {
+			screenPoint = Camera.main.WorldToScreenPoint (gameObject.transform.position);
+		
+			offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+		}
+		//Atom Seperation
+		if (ToolSel.movement == false) {
+			if (Seperable == true){
+				GameObject g1 = Instantiate (aprod, transform.position, Quaternion.identity) as GameObject;
+				GameObject g2 = Instantiate (aprod, transform.position, Quaternion.identity) as GameObject;
+				Destroy(gameObject);
+				g1.transform.position = Vector3.Lerp(g1.transform.position, finPos1, Time.deltaTime);
+				//g2.transform.position = Vector3.Lerp(g1.transform.position, finPos2, Time.deltaTime);
+			} else {
+				Debug.Log("No Seperation");
+			}
+		}
+	}
+
+	void OnMouseDrag()
+	{
+		if (ToolSel.movement == true) {
+			Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+
+			Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
+			transform.position = curPosition;
+		} 
+		if (ToolSel.movement == false) {
+			Debug.Log("No motion");
+		}
+	}
+
+	//FIX THE COMBOS YOU SCRUB
+	//Atom Attachment
+	void OnCollisionEnter (Collision other) {
+		if (Attachable == true) {
+			if (Input.GetMouseButton (0)) {
+				if (CollCount < 1) {
+					CollCount++;
+				}
+			}
+			if (!Input.GetMouseButton (0)) {
+				atoms = GameObject.FindGameObjectsWithTag ("Atom");
+				foreach (GameObject atomCurrent in atoms) {
+					Destroy (atomCurrent);
+				}		
+				Instantiate (atom, transform.position, Quaternion.identity);
+			}
+		} else {
+			Debug.Log("Are you Mad Bruv");
+		}
+	}
+}
